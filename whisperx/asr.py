@@ -319,10 +319,10 @@ class FasterWhisperPipeline(Pipeline):
                 }
             )
             end += time.time()
-            if idx+1 % batch_size == 0:
-                print(f"Time taken to transcribe batch {(idx+1)//batch_size}: {end-start}")
-                start=end
             print(f"start-{segments[idx]['start']} -> end-{segments[idx]['end']} \nText: {textwrap.fill(segments[idx]['text'], 100)} \n")
+            if idx+1 % batch_size == 0:
+                print(f"\nTime taken to transcribe batch {(idx+1)//batch_size}: {end-start}\n")
+                start=end
 
         # revert the tokenizer if multilingual inference is enabled
         if self.preset_language is None:
