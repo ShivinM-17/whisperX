@@ -1,7 +1,7 @@
 import os
 import warnings
 from typing import List, Union, Optional, NamedTuple
-
+import textwrap
 import ctranslate2
 import faster_whisper
 import numpy as np
@@ -315,6 +315,7 @@ class FasterWhisperPipeline(Pipeline):
                     "end": round(vad_segments[idx]['end'], 3)
                 }
             )
+            print(f"start-{segments[idx]['start']} -> end-{segments[idx]['end']} \nText: {textwrap.fill(segments[idx]['text'], 100)} \n")
 
         # revert the tokenizer if multilingual inference is enabled
         if self.preset_language is None:
