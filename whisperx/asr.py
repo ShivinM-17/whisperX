@@ -302,6 +302,7 @@ class FasterWhisperPipeline(Pipeline):
         batch_size = batch_size or self._batch_size
         total_segments = len(vad_segments)
         start=time.time()
+        end=0
         for idx, out in enumerate(self.__call__(data(audio, vad_segments), batch_size=batch_size, num_workers=num_workers)):
             if print_progress:
                 base_progress = ((idx + 1) / total_segments) * 100
@@ -317,9 +318,10 @@ class FasterWhisperPipeline(Pipeline):
                     "end": round(vad_segments[idx]['end'], 3)
                 }
             )
-            end=time.time()
-            print(f"Time taken to transcribe: {end-start}")
-            start=end
+            end += time.time()
+            if idx+1 % batch_size == 0:
+                print(f"Time taken to transcribe: {end-start}")
+                start=end
             print(f"start-{segments[idx]['start']} -> end-{segments[idx]['end']} \nText: {textwrap.fill(segments[idx]['text'], 100)} \n")
 
         # revert the tokenizer if multilingual inference is enabled
