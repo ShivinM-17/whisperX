@@ -318,7 +318,7 @@ def align(
                 sentence_words.append(word_segment)
 
             
-            tag_list =  nltk.pos_tag([word_text])
+            tag_list =  nltk.pos_tag([word_list])
             
             aligned_subsegments.append({
                 "text": sentence_text,
