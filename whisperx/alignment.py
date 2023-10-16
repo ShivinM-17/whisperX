@@ -311,9 +311,6 @@ def align(
                     word_segment["score"] = word_score
 
                 word_segment['token'] =  nltk.pos_tag([word_text])[0][1]
-
-                print(word_segment)
-
                 sentence_words.append(word_segment)
             
             aligned_subsegments.append({
@@ -347,8 +344,6 @@ def align(
     word_segments: List[SingleWordSegment] = []
     for segment in aligned_segments:
         word_segments += segment["words"]
-        print(segment["words"])
-        print()
 
     return {"segments": aligned_segments, "word_segments": word_segments}
 
