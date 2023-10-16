@@ -287,6 +287,8 @@ def align(
             sentence_end = curr_chars["end"].max()
             sentence_words = []
 
+            word_list = []
+
             for word_idx in curr_chars["word-idx"].unique():
                 word_chars = curr_chars.loc[curr_chars["word-idx"] == word_idx]
                 word_text = "".join(word_chars["char"].tolist()).strip()
@@ -303,6 +305,8 @@ def align(
                 # -1 indicates unalignable 
                 word_segment = {"word": word_text}
 
+                word_list.append(word_text)
+
                 if not np.isnan(word_start):
                     word_segment["start"] = word_start
                 if not np.isnan(word_end):
@@ -310,14 +314,18 @@ def align(
                 if not np.isnan(word_score):
                     word_segment["score"] = word_score
 
-                word_segment['token'] =  nltk.pos_tag([word_text])[0][1]
+                word_segment['tag'] =  nltk.pos_tag([word_text])[0][1]
                 sentence_words.append(word_segment)
+
+            
+            tag_list =  nltk.pos_tag([word_text])
             
             aligned_subsegments.append({
                 "text": sentence_text,
                 "start": sentence_start,
                 "end": sentence_end,
                 "words": sentence_words,
+                "tag": tag_list
             })
 
             if return_char_alignments:
