@@ -15,6 +15,7 @@ from .audio import SAMPLE_RATE, load_audio
 from .utils import interpolate_nans
 from .types import AlignedTranscriptionResult, SingleSegment, SingleAlignedSegment, SingleWordSegment
 import nltk
+from nltk.tag import pos_tag
 from nltk.tokenize.punkt import PunktSentenceTokenizer, PunktParameters
 
 PUNKT_ABBREVIATIONS = ['dr', 'vs', 'mr', 'mrs', 'prof']
@@ -342,6 +343,7 @@ def align(
     word_segments: List[SingleWordSegment] = []
     for segment in aligned_segments:
         word_segments += segment["words"]
+        print(segment["words"])
 
     return {"segments": aligned_segments, "word_segments": word_segments}
 
